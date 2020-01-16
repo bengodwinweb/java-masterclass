@@ -14,16 +14,35 @@ public class GroceryList {
         };
     }
 
-    public void modifyGroceryItem(int position, String newItem) {
-        groceryList.set(position, newItem);
+    public void modifyGroceryItem(String oldItem, String newItem) {
+        int index = findItem(oldItem);
+        if (index >= 0) {
+            modifyGroceryItem(index, newItem);
+        } else {
+            System.out.println("Item not found");
+        }
     }
 
-    public void removeGroceryItem(int position) {
-        groceryList.remove(position);
+    private void modifyGroceryItem(int index, String newItem) {
+        groceryList.set(index, newItem);
+        System.out.println("Modified Item " + (index + 1));
     }
 
-    public String findItem(String searchItem) {
-        int position = groceryList.indexOf(searchItem);
-        return position >= 0 ? groceryList.get(position) : null;
+    public void removeGroceryItem(String item) {
+        int index = findItem(item);
+        if (index >= 0) {
+            removeGroceryItem(index);
+        } else {
+            System.out.println("Item not found");
+        }
+    }
+
+    private void removeGroceryItem(int index) {
+        groceryList.remove(index);
+        System.out.println("Removed Item " + (index + 1));
+    }
+
+    public int findItem(String searchItem) {
+        return groceryList.indexOf(searchItem);
     }
 }
