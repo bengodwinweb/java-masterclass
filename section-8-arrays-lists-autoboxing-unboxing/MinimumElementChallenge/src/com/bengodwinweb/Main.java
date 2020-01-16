@@ -35,9 +35,9 @@ public class Main {
     }
 
     public static int findMin(int[] intArr) {
-        int min = intArr[0];
-        for (int i = 1; i < intArr.length; i++) {
-            if (intArr[i] < min) min = intArr[i];
+        int min = Integer.MAX_VALUE;
+        for (int i : intArr) {
+            if (i < min) min = i;
         }
         return min;
     }
