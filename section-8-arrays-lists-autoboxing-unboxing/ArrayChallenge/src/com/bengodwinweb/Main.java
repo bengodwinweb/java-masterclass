@@ -29,8 +29,6 @@ public class Main {
             scanner.nextLine();
         }
 
-        System.out.println(ints);
-
         scanner.close();
         int[] integers = new int[ints.size()];
         for (int i = 0; i < integers.length; i++) {
