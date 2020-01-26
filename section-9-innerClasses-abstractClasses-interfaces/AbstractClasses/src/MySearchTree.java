@@ -77,16 +77,14 @@ public class MySearchTree implements NodeList {
                 setRoot(null);
                 traverseAdd(currentNode.previous());
                 traverseAdd(currentNode.next());
-                return true;
-            }
-            else {
+            } else {
                 // if movingRight, remove right child, else remove Left Child
                 if (movingRight) lastNode.setNext(null);
                 else lastNode.setPrevious(null);
                 if (currentNode.previous() != null) traverseAdd(currentNode.previous());
                 if (currentNode.next() != null) traverseAdd(currentNode.next());
-                return true;
             }
+            return true;
         } else if (currentNode.compareTo(removeNode) > 0) {
             // move to left child, if no left child return false
             if (currentNode.previous() == null) return false;
