@@ -5,6 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ListView?>
 <BorderPane fx:controller="com.bengodwinweb.todolist.Controller"
             xmlns:fx="http://javafx.com/fxml">
+    <left>
+        <ListView>
+
+        </ListView>
+    </left>
 </BorderPane>
