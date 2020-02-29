@@ -14,6 +14,11 @@ public class TodoItem {
         this.deadline = deadline;
     }
 
+    @Override
+    public String toString() {
+        return shortDescription;
+    }
+
     public String getShortDescription() {
         return shortDescription;
     }
