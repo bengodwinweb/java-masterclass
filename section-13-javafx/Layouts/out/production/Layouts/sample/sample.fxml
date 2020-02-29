@@ -5,8 +5,9 @@
 <?import javafx.scene.control.Label?>
 <StackPane fx:controller="sample.Controller"
            xmlns:fx="http://javafx.com/fxml">
-    <Button text="Button One" style="-fx-background-color: red;"/>
     <Label text="The Label Text" style="-fx-background-color: green;"/>
+    <Button text="Button One" style="-fx-background-color: red;"/>
+    <Label text="The second label Text" style="-fx-background-color: blue;"/>
 </StackPane>
 
 
