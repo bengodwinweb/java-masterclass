@@ -68,6 +68,7 @@ public class Controller {
             DialogController controller = fxmlloader.getController();
             System.out.println(controller);
             controller.processResults();
+            todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
             System.out.println("OK PRESSED");
         } else {
             System.out.println("CANCEL PRESSED");
