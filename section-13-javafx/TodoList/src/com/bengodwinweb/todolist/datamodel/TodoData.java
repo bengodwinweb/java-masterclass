@@ -48,7 +48,6 @@ public class TodoData {
         try {
             while ((input = br.readLine()) != null) {
                 String[] itemPieces = input.split("\t");
-                System.out.println(itemPieces);
 
                 String shortDescription = itemPieces[0];
                 String details = itemPieces[1];
