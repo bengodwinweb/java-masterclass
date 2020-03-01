@@ -25,7 +25,7 @@ public class TodoData {
         return instance;
     }
 
-    private TodoDate() {
+    private TodoData() {
         formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
     }
 
@@ -33,9 +33,9 @@ public class TodoData {
         return todoItems;
     }
 
-    public void setTodoItems(List<TodoItem> todoItems) {
-        this.todoItems = todoItems;
-    }
+//    public void setTodoItems(List<TodoItem> todoItems) {
+//        this.todoItems = todoItems;
+//    }
 
     public void loadTodoItems() throws IOException {
 
