@@ -33,9 +33,9 @@ public class TodoData {
         return todoItems;
     }
 
-//    public void setTodoItems(List<TodoItem> todoItems) {
-//        this.todoItems = todoItems;
-//    }
+    public void addTodoItem(TodoItem item) {
+        this.todoItems.add(item);
+    }
 
     public void loadTodoItems() throws IOException {
 
@@ -48,6 +48,7 @@ public class TodoData {
         try {
             while ((input = br.readLine()) != null) {
                 String[] itemPieces = input.split("\t");
+                System.out.println(itemPieces);
 
                 String shortDescription = itemPieces[0];
                 String details = itemPieces[1];
@@ -86,4 +87,5 @@ public class TodoData {
             }
         }
     }
+
 }
