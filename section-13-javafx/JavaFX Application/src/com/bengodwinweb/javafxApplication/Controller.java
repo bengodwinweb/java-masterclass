@@ -6,9 +6,15 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Controller {
     @FXML
@@ -17,6 +23,8 @@ public class Controller {
     private Button button4;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private WebView webView;
 
     public void initialize() {
         button4.setEffect(new DropShadow(15, Color.GREEN));
@@ -37,11 +45,31 @@ public class Controller {
     @FXML
     public void handleClick() {
         FileChooser chooser = new FileChooser();
-        File file = chooser.showOpenDialog(gridPane.getScene().getWindow());
+        chooser.setTitle("Save Application File");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text", "*.txt"),
+                new FileChooser.ExtensionFilter("PDF", "*.pdf")
+        );
+
+        File file = chooser.showSaveDialog(gridPane.getScene().getWindow());
         if (file != null) {
             System.out.println(file.getPath());
         } else {
             System.out.println("Chooser was cancelled");
         }
+    }
+
+    @FXML
+    public void handleLinkClick() {
+//        try {
+//            Desktop.getDesktop().browse(new URI("http://www.javafx.com"));
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//        } catch(URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+
+        WebEngine engine = webView.getEngine();
+        engine.load("http://www.javafx.com");
     }
 }
