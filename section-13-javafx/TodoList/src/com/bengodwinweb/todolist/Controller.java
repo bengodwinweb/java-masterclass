@@ -2,6 +2,7 @@ package com.bengodwinweb.todolist;
 
 import com.bengodwinweb.todolist.datamodel.TodoData;
 import com.bengodwinweb.todolist.datamodel.TodoItem;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
@@ -43,6 +44,8 @@ public class Controller {
     private ToggleButton filterToggleButton;
 
     public FilteredList<TodoItem> filteredList;
+    private Predicate<TodoItem> allItems;
+    private Predicate<TodoItem> todaysItems;
 
     public void initialize() {
 
@@ -71,14 +74,20 @@ public class Controller {
             }
         });
 
-        filteredList = new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(),
-                new Predicate<TodoItem>() {
-                    @Override
-                    public boolean test(TodoItem todoItem) {
-                        return true;
-                    }
-                }
-        );
+        allItems = new Predicate<TodoItem>() {
+            @Override
+            public boolean test(TodoItem item) {
+                return true;
+            }
+        };
+        todaysItems = new Predicate<TodoItem>() {
+            @Override
+            public boolean test(TodoItem item) {
+                return item.getDeadline().equals(LocalDate.now());
+            }
+        };
+
+        filteredList = new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), allItems);
         SortedList<TodoItem> sortedList = new SortedList<>(filteredList,
             new Comparator<TodoItem>() {
                 @Override
@@ -183,21 +192,27 @@ public class Controller {
         }
     }
 
+    @FXML
     public void handleFilterButton() {
+        TodoItem selectedItem = todoListView.getSelectionModel().getSelectedItem();
         if (filterToggleButton.isSelected()) {
-            filteredList.setPredicate(new Predicate<TodoItem>() {
-                @Override
-                public boolean test(TodoItem item) {
-                    return item.getDeadline().equals(LocalDate.now());
-                }
-            });
+            filteredList.setPredicate(todaysItems);
+            if (filteredList.isEmpty()) {
+                itemDetailsTextArea.clear();
+                deadlineLabel.setText("");
+            } else if (filteredList.contains(selectedItem)) {
+                todoListView.getSelectionModel().select(selectedItem);
+            } else {
+                todoListView.getSelectionModel().selectFirst();
+            }
         } else {
-            filteredList.setPredicate(new Predicate<TodoItem>() {
-                @Override
-                public boolean test(TodoItem todoItem) {
-                    return true;
-                }
-            });
+            filteredList.setPredicate(allItems);
+            todoListView.getSelectionModel().select(selectedItem);
         }
+    }
+
+    @FXML
+    public void handleExit() {
+        Platform.exit();
     }
 }
