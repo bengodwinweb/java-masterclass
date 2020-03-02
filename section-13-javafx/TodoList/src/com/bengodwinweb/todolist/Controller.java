@@ -4,11 +4,14 @@ import com.bengodwinweb.todolist.datamodel.TodoData;
 import com.bengodwinweb.todolist.datamodel.TodoItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +65,15 @@ public class Controller {
             }
         });
 
-        todoListView.setItems(TodoData.getInstance().getTodoItems());
+        SortedList<TodoItem> sortedList = new SortedList<>(TodoData.getInstance().getTodoItems(),
+                new Comparator<TodoItem>() {
+                    @Override
+                    public int compare(TodoItem o1, TodoItem o2) {
+                        return o1.getDeadline().compareTo(o2.getDeadline());
+                    }
+                });
+
+        todoListView.setItems(sortedList);
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         todoListView.getSelectionModel().selectFirst();
 
@@ -129,6 +141,18 @@ public class Controller {
             System.out.println("OK PRESSED");
         } else {
             System.out.println("CANCEL PRESSED");
+        }
+    }
+
+    @FXML
+    public void handleKeyPressed(KeyEvent e) {
+        TodoItem selectedItem = todoListView.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            if (e.getCode().equals(KeyCode.BACK_SPACE)) {
+                System.out.println("DELETE");
+                deleteItem(selectedItem);
+            }
         }
     }
 

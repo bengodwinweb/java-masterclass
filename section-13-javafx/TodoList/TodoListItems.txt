@@ -6,5 +6,4 @@ New TodoItem	Another Todo List Item for later	Mar 2, 2020
 Another new item	A new todolist item to do	Mar 6, 2020
 Item	asdfadslfjkasdf ads;fk asdflj	Mar 2, 2020
 asdfa	asfd adf ads fad flkajsdflj asdlfj adlkfj	Mar 13, 2020
-asdf	asdfsdaf adsfasd asdfas dfaasdfasd f	Mar 1, 2020
 Item already due	This item's due date has already passed	Feb 27, 2020
