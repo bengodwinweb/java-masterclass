@@ -4,6 +4,7 @@ import com.bengodwinweb.todolist.datamodel.TodoData;
 import com.bengodwinweb.todolist.datamodel.TodoItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,6 +24,7 @@ import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Controller {
 
@@ -37,6 +39,10 @@ public class Controller {
     private BorderPane mainBorderPane;
     @FXML
     private ContextMenu listContextMenu;
+    @FXML
+    private ToggleButton filterToggleButton;
+
+    public FilteredList<TodoItem> filteredList;
 
     public void initialize() {
 
@@ -65,13 +71,22 @@ public class Controller {
             }
         });
 
-        SortedList<TodoItem> sortedList = new SortedList<>(TodoData.getInstance().getTodoItems(),
-                new Comparator<TodoItem>() {
+        filteredList = new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(),
+                new Predicate<TodoItem>() {
                     @Override
-                    public int compare(TodoItem o1, TodoItem o2) {
-                        return o1.getDeadline().compareTo(o2.getDeadline());
+                    public boolean test(TodoItem todoItem) {
+                        return true;
                     }
-                });
+                }
+        );
+        SortedList<TodoItem> sortedList = new SortedList<>(filteredList,
+            new Comparator<TodoItem>() {
+                @Override
+                public int compare(TodoItem o1, TodoItem o2) {
+                    return o1.getDeadline().compareTo(o2.getDeadline());
+                }
+            }
+        );
 
         todoListView.setItems(sortedList);
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -165,6 +180,24 @@ public class Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             TodoData.getInstance().deleteTodoItem(item);
+        }
+    }
+
+    public void handleFilterButton() {
+        if (filterToggleButton.isSelected()) {
+            filteredList.setPredicate(new Predicate<TodoItem>() {
+                @Override
+                public boolean test(TodoItem item) {
+                    return item.getDeadline().equals(LocalDate.now());
+                }
+            });
+        } else {
+            filteredList.setPredicate(new Predicate<TodoItem>() {
+                @Override
+                public boolean test(TodoItem todoItem) {
+                    return true;
+                }
+            });
         }
     }
 }
