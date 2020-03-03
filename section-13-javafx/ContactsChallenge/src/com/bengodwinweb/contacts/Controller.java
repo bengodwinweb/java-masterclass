@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Controller {
@@ -94,6 +95,18 @@ public class Controller {
         }
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            ContactDialogController controller = fxmlLoader.getController();
+            Contact newContact = controller.getContact();
+            ContactData.getInstance().addContact(newContact);
+            contactTableView.getSelectionModel().select(newContact);
+            System.out.println("OK PRESSED");
+        } else {
+            System.out.println("CANCEL PRESSED");
+        }
     }
 
 

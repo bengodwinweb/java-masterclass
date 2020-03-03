@@ -12,4 +12,10 @@
 	<phone_number>(123) 456-7890</phone_number>
 	<notes>notes</notes>
 </contact>
+<contact>
+	<first_name>New</first_name>
+	<last_name>Contact</last_name>
+	<phone_number>(444) 555-6666</phone_number>
+	<notes>asdlkfjadlfkjad adlkfj aldkfj aldkfj</notes>
+</contact>
 </contacts>

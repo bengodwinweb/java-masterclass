@@ -14,7 +14,7 @@
             </font></Label>
             <ToolBar>
                 <HBox spacing="10.0">
-                    <Button text="New">
+                    <Button text="New" onAction="#showNewContactDialog">
                         <tooltip>
                             <Tooltip text="Add a new Contact" />
                         </tooltip>
