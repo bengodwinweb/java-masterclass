@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bengodwinweb.contacts.Controller">
+    <top>
+        <VBox alignment="CENTER" spacing="5.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Contacts" textAlignment="CENTER">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+            <ToolBar>
+                <HBox spacing="10.0">
+                    <Button text="New">
+                        <tooltip>
+                            <Tooltip text="Add a new Contact" />
+                        </tooltip>
+                    </Button>
+                    <Button text="Edit">
+                        <tooltip>
+                            <Tooltip text="Edit the current Contact" />
+                        </tooltip>
+                    </Button>
+                    <Button text="Delete">
+                        <tooltip>
+                            <Tooltip text="Delete the current Contact" />
+                        </tooltip>
+                    </Button>
+                </HBox>
+            </ToolBar>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="contactTableView" />
+    </center>
+</BorderPane>

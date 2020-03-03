@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contacts>
+<contact>
+	<first_name>Benjamin</first_name>
+	<last_name>Godwin</last_name>
+	<phone_number>(540) 604-6376</phone_number>
+	<notes>description</notes>
+</contact>
+<contact>
+	<first_name>Test</first_name>
+	<last_name>Contact</last_name>
+	<phone_number>(123) 456-7890</phone_number>
+	<notes>notes</notes>
+</contact>
+</contacts>

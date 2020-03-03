@@ -23,13 +23,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Controller {
 
-    private List<TodoItem> todoItems;
     @FXML
     private ListView<TodoItem> todoListView;
     @FXML
