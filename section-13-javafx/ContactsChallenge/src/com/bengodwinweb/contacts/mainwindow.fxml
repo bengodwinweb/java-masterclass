@@ -24,7 +24,7 @@
                             <Tooltip text="Edit the current Contact" />
                         </tooltip>
                     </Button>
-                    <Button text="Delete">
+                    <Button text="Delete" onAction="#deleteContact">
                         <tooltip>
                             <Tooltip text="Delete the current Contact" />
                         </tooltip>

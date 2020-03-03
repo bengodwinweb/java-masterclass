@@ -13,9 +13,15 @@
 	<notes>notes</notes>
 </contact>
 <contact>
-	<first_name>New</first_name>
-	<last_name>Contact</last_name>
-	<phone_number>(444) 555-6666</phone_number>
-	<notes>asdlkfjadlfkjad adlkfj aldkfj aldkfj</notes>
+	<first_name>PhoneNumber</first_name>
+	<last_name>Test</last_name>
+	<phone_number>(123) 456-7766</phone_number>
+	<notes>asdf</notes>
+</contact>
+<contact>
+	<first_name>Steve</first_name>
+	<last_name>Blander</last_name>
+	<phone_number>(540) 604-7760</phone_number>
+	<notes>asdf;j adsljd</notes>
 </contact>
 </contacts>
