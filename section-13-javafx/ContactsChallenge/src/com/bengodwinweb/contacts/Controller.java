@@ -209,6 +209,7 @@ public class Controller {
                 // replace object selected in tableView with new contact from form
                 Collections.replaceAll(ContactData.getInstance().getContacts(), selected, contact);
             }
+            ContactData.getInstance().saveContacts();
             contactTableView.getSelectionModel().select(contact);
         }
         // Cancel pressed - do nothing
@@ -228,6 +229,7 @@ public class Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             ContactData.getInstance().deleteContact(contact);
+            ContactData.getInstance().saveContacts();
         }
     }
 
