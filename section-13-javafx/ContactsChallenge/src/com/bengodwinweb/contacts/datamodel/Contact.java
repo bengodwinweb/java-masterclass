@@ -20,7 +20,7 @@ public class Contact {
     public Contact(String firstName, String lastName, String phoneNumber, String notes) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = sanitizePhoneNumber(phoneNumber);
         this.notes = notes;
         this.created = LocalDateTime.now();
     }
@@ -47,12 +47,15 @@ public class Contact {
     }
 
     public String getPhoneNumber() {
-        String number = phoneNumber;
-        return number.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+        return formatPhoneNumber(phoneNumber);
+    }
+
+    public String getRawPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = sanitizePhoneNumber(phoneNumber);
     }
 
     public String getNotes() {
@@ -65,5 +68,13 @@ public class Contact {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public static String sanitizePhoneNumber(String s) {
+        return s.replaceAll("[^\\d]", "");
+    }
+
+    public static String formatPhoneNumber(String s) {
+        return s.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
     }
 }

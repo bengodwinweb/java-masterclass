@@ -175,7 +175,7 @@ public class ContactData {
         // Write the different nodes
         createNode(eventWriter, FIRST_NAME, contact.getFirstName());
         createNode(eventWriter, LAST_NAME, contact.getLastName());
-        createNode(eventWriter, PHONE_NUMBER, contact.getPhoneNumber());
+        createNode(eventWriter, PHONE_NUMBER, contact.getRawPhoneNumber());
         createNode(eventWriter, NOTES, contact.getNotes());
 
         eventWriter.add(eventFactory.createEndElement("", "", CONTACT));

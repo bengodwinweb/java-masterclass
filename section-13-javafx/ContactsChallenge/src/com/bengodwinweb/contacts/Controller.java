@@ -5,6 +5,8 @@ import com.bengodwinweb.contacts.datamodel.ContactData;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -12,9 +14,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -26,26 +31,86 @@ public class Controller {
     private Label topLabel;
     @FXML
     private TableView<Contact> contactTableView;
+    @FXML
+    private TextField searchBar;
 
+    @FXML
+    private ContextMenu tableContextMenu;
     private FilteredList<Contact> filteredList;
-    private Predicate<Contact> allItems;
+
+    public enum Action {
+        EDIT, NEW
+    }
 
     public void initialize() {
 
-        // All contacts predicate for filtered list
-        allItems = new Predicate<Contact>() {
+        tableContextMenu = new ContextMenu();
+        MenuItem newMenuItem = new MenuItem("New");
+        newMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public boolean test(Contact contact) {
-                return true;
+            public void handle(ActionEvent event) {
+                newContactDialog();
             }
-        };
+        });
+        MenuItem editMenuItem = new MenuItem("Edit");
+        editMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                editContactDialog();
+            }
+        });
+        MenuItem deleteMenuItem = new MenuItem("Delete");
+        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deleteContact();
+            }
+        });
+
+        tableContextMenu.getItems().addAll(newMenuItem, editMenuItem, deleteMenuItem);
+        contactTableView.setContextMenu(tableContextMenu);
 
         // filter the list of contacts from ContactData by predicate
         filteredList = new FilteredList<Contact>(ContactData.getInstance().getContacts());
-        // sort contacts - compare by last name then first name
-        SortedList<Contact> sortedList = new SortedList<>(filteredList,
-                Comparator.comparing(Contact::getLastName).thenComparing(Contact::getFirstName)
-        );
+
+        searchBar.textProperty().addListener((obsservable, oldValue, newValue) -> {
+            filteredList.setPredicate(contact -> {
+                if (newValue == null) {
+                    return true;
+                }
+
+                String searchTerm = newValue.trim().toLowerCase();
+                String phoneNumberSearchTerm = Contact.sanitizePhoneNumber(searchTerm);
+
+                // return true if searchTerm is part of last name
+                if (contact.getLastName().toLowerCase().contains(searchTerm)) {
+                    return true;
+                }
+                // return true if searchTerm is part of first name
+                if (contact.getFirstName().toLowerCase().contains(searchTerm)) {
+                    return true;
+                }
+                // return true if searchTerm is in notes
+                if (contact.getNotes().toLowerCase().contains(searchTerm)) {
+                    return true;
+                }
+                // return true is searchTerm is exactly "(" - beginning of a phone number
+                if (searchTerm.equals("(")) {
+                    return true;
+                }
+                // return true is searchTerm is in phoneNumber and phoneNumberSearchTerm.length() is positive
+                if (phoneNumberSearchTerm.length() > 0
+                        && contact.getRawPhoneNumber().contains(phoneNumberSearchTerm)) {
+                    return true;
+                }
+
+                // no match, return false
+                return false;
+            });
+        });
+
+        SortedList<Contact> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(contactTableView.comparatorProperty());
 
         // Last Name Column
         TableColumn<Contact, String> lastNameColumn = new TableColumn<>("Last Name");
@@ -73,19 +138,46 @@ public class Controller {
         // Placeholder if no contacts
         contactTableView.setPlaceholder(new Label("No contacts to display"));
 
-
         contactTableView.setItems(sortedList);
-        contactTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         contactTableView.getSelectionModel().selectFirst();
+        contactTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         contactTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        contactTableView.getSortOrder().add(lastNameColumn);
+        contactTableView.getSortOrder().add(firstNameColumn);
+        contactTableView.sort();
     }
 
     @FXML
-    public void showNewContactDialog() {
+    public void editContactDialog() {
+        contactDialog(Action.EDIT);
+    }
+
+    @FXML
+    public void newContactDialog() {
+        contactDialog(Action.NEW);
+    }
+
+    @FXML
+    private void contactDialog(Action action) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Add New Contact");
-        dialog.setHeaderText("Use this dialog to create a new Contact");
+
+        String dialogTitle;
+        String dialogHeader;
+        // only used if editing
+        Contact selected = contactTableView.getSelectionModel().getSelectedItem();
+
+        if (action == Action.EDIT) {
+            dialogTitle = "Edit Contact";
+            dialogHeader = "Edit Contact: " + selected.getFirstName() + " " + selected.getLastName();
+        } else {
+            dialogTitle = "Add New Contact";
+            dialogHeader = "Use this dialog to create a new Contact";
+        }
+
+        dialog.setTitle(dialogTitle);
+        dialog.setHeaderText(dialogHeader);
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("contactDialog.fxml"));
         try {
@@ -99,16 +191,27 @@ public class Controller {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
+        ContactDialogController controller = fxmlLoader.getController();
+        if (action == Action.EDIT) {
+            // if editing, set the text in the form using selected contact
+            controller.setContact(selected);
+        }
+
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            ContactDialogController controller = fxmlLoader.getController();
-            Contact newContact = controller.getContact();
-            ContactData.getInstance().addContact(newContact);
-            contactTableView.getSelectionModel().select(newContact);
-            System.out.println("OK PRESSED");
-        } else {
-            System.out.println("CANCEL PRESSED");
+            // new Contact generated by form data
+            Contact contact = controller.getContact();
+            if (action == Action.NEW) {
+                // add Contact to data
+                ContactData.getInstance().addContact(contact);
+            }
+            if (action == Action.EDIT) {
+                // replace object selected in tableView with new contact from form
+                Collections.replaceAll(ContactData.getInstance().getContacts(), selected, contact);
+            }
+            contactTableView.getSelectionModel().select(contact);
         }
+        // Cancel pressed - do nothing
     }
 
     @FXML
@@ -139,7 +242,10 @@ public class Controller {
                     deleteContact();
                     break;
                 case N:
-                    showNewContactDialog();
+                    newContactDialog();
+                    break;
+                case E:
+                    editContactDialog();
                     break;
                 default:
                     break;

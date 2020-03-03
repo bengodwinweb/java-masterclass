@@ -3,31 +3,19 @@
 <contact>
 	<first_name>Benjamin</first_name>
 	<last_name>Godwin</last_name>
-	<phone_number>(540) 604-6376</phone_number>
-	<notes>description</notes>
+	<phone_number>5406046376</phone_number>
+	<notes>me</notes>
 </contact>
 <contact>
-	<first_name>Test</first_name>
-	<last_name>Contact</last_name>
-	<phone_number>(123) 456-7890</phone_number>
-	<notes>notes</notes>
+	<first_name>Joe</first_name>
+	<last_name>Malarkey</last_name>
+	<phone_number>1112223344</phone_number>
+	<notes>biden</notes>
 </contact>
 <contact>
-	<first_name>Steve</first_name>
-	<last_name>Blander</last_name>
-	<phone_number>(540) 604-7760</phone_number>
-	<notes>asdf;j adsljd</notes>
-</contact>
-<contact>
-	<first_name>Greg</first_name>
-	<last_name>Spleen</last_name>
-	<phone_number>(555) 888-4591</phone_number>
-	<notes>Greg, Spleen</notes>
-</contact>
-<contact>
-	<first_name>Blarf</first_name>
-	<last_name>Greedler</last_name>
-	<phone_number>(489) 444-2974</phone_number>
-	<notes>Blarf Greedler. Blarf GreedLER. Blarf GREEDler. BlARF Greedler. BlarfGreedler.</notes>
+	<first_name>Bernard</first_name>
+	<last_name>Sanders</last_name>
+	<phone_number>5678920011</phone_number>
+	<notes>Bulking for Bernard </notes>
 </contact>
 </contacts>

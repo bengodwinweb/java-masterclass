@@ -15,16 +15,22 @@ public class ContactDialogController {
     @FXML
     private TextArea notesArea;
 
+    // creates a new contact from the form data
     public Contact getContact() {
         String firstName = firstNameField.getText().trim();
-        System.out.print("first: " + firstName);
         String lastName = lastNameField.getText().trim();
-        System.out.print(", last: " + lastName);
-        String phoneNumber = phoneNumberField.getText().trim().replaceAll("[^\\d]", "");
-        System.out.println(", phone#: " + phoneNumber);
+        String phoneNumber = phoneNumberField.getText().trim();
         String notes = notesArea.getText().trim();
 
         Contact contact = new Contact(firstName, lastName, phoneNumber, notes);
         return contact;
+    }
+
+    // Use this method to set the text in each field for editing a contact
+    public void setContact(Contact contact) {
+        firstNameField.setText(contact.getFirstName());
+        lastNameField.setText(contact.getLastName());
+        phoneNumberField.setText(contact.getPhoneNumber());
+        notesArea.setText(contact.getNotes());
     }
 }
