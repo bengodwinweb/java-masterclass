@@ -13,15 +13,21 @@
 	<notes>notes</notes>
 </contact>
 <contact>
-	<first_name>PhoneNumber</first_name>
-	<last_name>Test</last_name>
-	<phone_number>(123) 456-7766</phone_number>
-	<notes>asdf</notes>
-</contact>
-<contact>
 	<first_name>Steve</first_name>
 	<last_name>Blander</last_name>
 	<phone_number>(540) 604-7760</phone_number>
 	<notes>asdf;j adsljd</notes>
+</contact>
+<contact>
+	<first_name>Greg</first_name>
+	<last_name>Spleen</last_name>
+	<phone_number>(555) 888-4591</phone_number>
+	<notes>Greg, Spleen</notes>
+</contact>
+<contact>
+	<first_name>Blarf</first_name>
+	<last_name>Greedler</last_name>
+	<phone_number>(489) 444-2974</phone_number>
+	<notes>Blarf Greedler. Blarf GreedLER. Blarf GREEDler. BlARF Greedler. BlarfGreedler.</notes>
 </contact>
 </contacts>

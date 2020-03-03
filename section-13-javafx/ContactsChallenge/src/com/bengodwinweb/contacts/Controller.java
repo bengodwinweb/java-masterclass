@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -123,6 +125,25 @@ public class Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             ContactData.getInstance().deleteContact(contact);
+        }
+    }
+
+    @FXML
+    public void handleKeyPressed(KeyEvent e) {
+        Contact selected = contactTableView.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            KeyCode keyCode = e.getCode();
+            switch (keyCode) {
+                case BACK_SPACE:
+                    deleteContact();
+                    break;
+                case N:
+                    showNewContactDialog();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
