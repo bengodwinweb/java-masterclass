@@ -5,72 +5,32 @@ public class Locations implements Map<Integer, Location> {
     private static Map<Integer, Location> locations = new LinkedHashMap<>();
 
     public static void main(String[] args) throws IOException {
-        try(DataOutputStream locFile = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("locations.dat")))) {
-            for (Location location : locations.values()) {
-                locFile.writeInt(location.getLocationID());
-                locFile.writeUTF(location.getDescription());
-                System.out.println("Writing location " + location.getLocationID() + ": " + location.getDescription());
-                System.out.println("Writing " + (location.getExits().size()) + " exits");
-                locFile.writeInt(location.getExits().size());
-                for(String direction : location.getExits().keySet()) {
-                    if (!direction.equalsIgnoreCase("Q")) {
-                        System.out.println("\t\t" + direction + "," + location.getExits().get(direction));
-                        locFile.writeUTF(direction);
-                        locFile.writeInt(location.getExits().get(direction));
-                    }
-                }
+        try(ObjectOutputStream locFile = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("locations.dat")))) {
+            for(Location location : locations.values()) {
+                locFile.writeObject(location);
             }
         }
     }
 
     static {
-        try(DataInputStream locFile = new DataInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))) {
+        try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))) {
             boolean eof = false;
-            while(!eof) {
+            while (!eof) {
                 try {
-                    int locID = locFile.readInt();
-                    String description = locFile.readUTF();
-                    int numExits = locFile.readInt();
-                    System.out.println("Read location " + locID + ": " + description);
-                    System.out.println("Found " + numExits + " exits.");
-                    Location location = new Location(locID, description);
-                    for(int i = 0; i < numExits; i++) {
-                        String direction = locFile.readUTF();
-                        int destination = locFile.readInt();
-                        location.addExit(direction, destination);
-                        System.out.println("\t\t" + direction + "," + destination);
-                    }
-                    locations.put(locID, location);
-                } catch (EOFException e) {
+                    Location location = (Location) locFile.readObject();
+                    System.out.println("Read location " + location.getLocationID() + ": " + location.getDescription());
+                    System.out.println("Found " + location.getExits().size() + " exits");
+
+                    locations.put(location.getLocationID(), location);
+                }  catch (EOFException e) {
                     eof = true;
                 }
             }
         } catch (IOException e) {
-            System.out.println("IO Exception");
-            e.printStackTrace();
+            System.out.println("IO Exception" + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found exception" + e.getMessage());
         }
-
-//        try(BufferedReader locFile = new BufferedReader(new FileReader("locations_big.txt"));
-//            BufferedReader dirFile = new BufferedReader(new FileReader("directions_big.txt")))
-//        {
-//            String input;
-//            while((input = locFile.readLine()) != null) {
-//                String[] data = input.split(",");
-//                int loc = Integer.parseInt(data[0]);
-//                String description = data[1];
-//                locations.put(loc, new Location(loc, description));
-//            }
-//
-//            while((input = dirFile.readLine()) != null) {
-//                String[] data = input.split(",");
-//                int loc = Integer.parseInt(data[0]);
-//                String dir = data[1];
-//                int exit = Integer.parseInt(data[2]);
-//                locations.get(loc).addExit(dir, exit);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override

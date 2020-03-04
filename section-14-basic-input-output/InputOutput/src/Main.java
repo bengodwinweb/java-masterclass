@@ -14,6 +14,12 @@ public class Main {
         vocabulary.put("EAST", "E");
         vocabulary.put("SOUTH", "S");
         vocabulary.put("WEST", "W");
+        vocabulary.put("UP", "U");
+        vocabulary.put("DOWN", "D");
+        vocabulary.put("NORTHEAST", "NE");
+        vocabulary.put("SOUTHEAST", "SE");
+        vocabulary.put("SOUTHWEST", "SW");
+        vocabulary.put("NORTHWEST", "NW");
 
         int loc = 1;
         boolean quit = false;
