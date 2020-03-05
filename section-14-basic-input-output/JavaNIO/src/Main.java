@@ -86,7 +86,15 @@ public class Main {
             System.out.println("int3 = " + int3);
             System.out.println("inputString2 = " + new String(inputString2));
             System.out.println("inputString = " + new String(inputString));
-            
+
+            RandomAccessFile copyFile = new RandomAccessFile("datacopy.dat", "rwd");
+            FileChannel copyChannel = copyFile.getChannel();
+            long numTransferred = copyChannel.transferFrom(channel.position(0), 0, channel.size());
+            System.out.println("numTransferred = " + numTransferred);
+
+            channel.close();
+            ra.close();
+            copyChannel.close();
 
         } catch (IOException e) {
             e.printStackTrace();
