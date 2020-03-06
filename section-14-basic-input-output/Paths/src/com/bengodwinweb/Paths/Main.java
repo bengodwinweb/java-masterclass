@@ -64,6 +64,24 @@ public class Main {
         } catch(IOException e) {
             System.out.println(ANSI_BRIGHT_RED + "IOException: " + ANSI_RESET + e.getMessage());
         }
+
+        System.out.println();
+
+        File file = new File("FileTree/file1.txt");
+        Path convertedPath = file.toPath();
+        System.out.println("convertedPath = " + convertedPath);
+
+        File workingDir = new File("").getAbsoluteFile();
+
+        System.out.println("\n----- Print Dir2 contents using listFiles() -----");
+        String separator = File.separator;
+        File dir2File = new File(workingDir, separator + "FileTree" + separator + "Dir2");
+        File[] files = dir2File.listFiles();
+        for (File aFile : files) {
+            System.out.println(aFile.getName());
+        }
+
+
     }
 
     public static String formatFileTime(FileTime time) {
