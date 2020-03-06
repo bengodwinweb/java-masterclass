@@ -9,11 +9,20 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Path sourceFile = FileSystems.getDefault().getPath("Examples", "file1.txt");
-            Path copyFile = FileSystems.getDefault().getPath("Examples", "file1copy.txt");
-            Files.copy(sourceFile, copyFile);
+            Path fileToMove = FileSystems.getDefault().getPath("Examples", "file1.txt");
+            Path destination = FileSystems.getDefault().getPath("Examples", "file2.txt");
+            Files.move(fileToMove, destination);
+
+
+//            Path sourceFile = FileSystems.getDefault().getPath("Examples", "file1.txt");
+//            Path copyFile = FileSystems.getDefault().getPath("Examples", "file1copy.txt");
+//            Files.copy(sourceFile, copyFile, StandardCopyOption.REPLACE_EXISTING);
+//
+//            sourceFile = FileSystems.getDefault().getPath("Examples", "Dir1");
+//            copyFile = FileSystems.getDefault().getPath("Examples", "Dir4");
+//            Files.copy(sourceFile, copyFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("IOException: " + e.getMessage());
         }
     }
 //        Path workingDirectoryPath = FileSystems.getDefault().getPath("WorkingDirectory.txt");
