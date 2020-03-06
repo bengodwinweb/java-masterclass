@@ -1,7 +1,6 @@
 package com.bengodwinweb.Threads;
 
-import static com.bengodwinweb.Threads.ThreadColor.ANSI_PURPLE;
-import static com.bengodwinweb.Threads.ThreadColor.ANSI_GREEN;
+import static com.bengodwinweb.Threads.ThreadColor.*;
 
 public class Main {
 
@@ -15,6 +14,13 @@ public class Main {
         new Thread() {
             public void run() {
                 System.out.println(ANSI_GREEN + "Hello from the anonymous thread");
+                try {
+                    anotherThread.join(2000);
+                    System.out.println(ANSI_RED + "AnotherThread terminated or timed out, so I'm running again");
+                } catch(InterruptedException e) {
+                    System.out.println(ANSI_RED + "I couldn't wait after all. I was interrupted");
+                    return;
+                }
             }
         }.start();
 
