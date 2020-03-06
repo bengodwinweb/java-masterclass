@@ -56,6 +56,14 @@ public class Main {
         } catch (IOException e) {
             System.out.println(ANSI_BRIGHT_RED + "IOException: " + ANSI_RESET + e.getMessage());
         }
+
+        System.out.println("\n------Copying Dir2 to Dir4/Dir2Copy-------");
+        Path copyPath = FileSystems.getDefault().getPath("FileTree", "Dir4", "Dir2Copy");
+        try {
+            Files.walkFileTree(dir2Path, new CopyFiles(dir2Path, copyPath));
+        } catch(IOException e) {
+            System.out.println(ANSI_BRIGHT_RED + "IOException: " + ANSI_RESET + e.getMessage());
+        }
     }
 
     public static String formatFileTime(FileTime time) {

@@ -10,7 +10,7 @@ public class PrintNames extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        System.out.println(file.toAbsolutePath());
+        System.out.println("\t" + file.toAbsolutePath());
         return FileVisitResult.CONTINUE;
     }
 
