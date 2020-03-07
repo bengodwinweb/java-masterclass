@@ -71,10 +71,12 @@ class MyConsumer implements Runnable {
         while (true) {
             bufferLock.lock();
             if (buffer.isEmpty()) {
+                bufferLock.unlock();
                 continue;
             }
             if (buffer.get(0).equals(Main.EOF)) {
                 System.out.println(color + "Exiting");
+                bufferLock.unlock();
                 break;
             }
             System.out.println(color + "Removed " + buffer.remove(0));
