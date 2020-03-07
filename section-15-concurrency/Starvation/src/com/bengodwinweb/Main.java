@@ -1,11 +1,13 @@
 package com.bengodwinweb;
 
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import static com.bengodwinweb.ThreadColor.*;
 
 public class Main {
     private final String RESET = ANSI_RESET;
-    private static Object lock = new Object();
+    private static ReentrantLock lock = new ReentrantLock(true);
 
     public static void main(String[] args) {
         Thread t1 = new Thread(new Worker(ANSI_RED), "Priority 10");
@@ -20,10 +22,10 @@ public class Main {
         t4.setPriority(4);
         t5.setPriority(2);
 
-        t4.start();
-        t2.start();
-        t5.start();
         t3.start();
+        t5.start();
+        t2.start();
+        t4.start();
         t1.start();
     }
 
@@ -38,9 +40,12 @@ public class Main {
         @Override
         public void run() {
             for(int i = 0; i<100; i++) {
-                synchronized (lock) {
+                lock.lock();
+                try {
                     System.out.format(threadColor + "%s: runCount = %d%n", Thread.currentThread().getName(), runCount++);
                     // execute critical section of code
+                } finally {
+                    lock.unlock();
                 }
             }
         }
