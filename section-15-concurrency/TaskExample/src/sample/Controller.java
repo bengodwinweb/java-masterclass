@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -19,47 +20,19 @@ public class Controller {
     @FXML
     private Label progressLabel;
 
-    private Task<ObservableList<String>> task;
+    private Service<ObservableList<String>> service;
 
     public void initialize() {
-        task = new Task<ObservableList<String>>() {
-            @Override
-            protected ObservableList<String> call() throws Exception {
-                String[] names = {
-                        "Tim Buchalka",
-                        "Bill Rogers",
-                        "Jack Jill",
-                        "Joan Andrews",
-                        "Mary Johnson",
-                        "Bob McDonald"
-                };
+        service = new EmployeeService();
 
-                ObservableList<String> employees = FXCollections.observableArrayList();
-
-                int progress = 0;
-                int maxProgress = names.length;
-                for (String name : names) {
-                    employees.add(name);
-                    updateProgress(++progress, maxProgress);
-                    updateMessage(String.format("Added %s to the list", name));
-                    Thread.sleep(200);
-                }
-
-                progressBar.setVisible(false);
-                progressLabel.setVisible(false);
-
-                return employees;
-            }
-        };
-
-        progressBar.progressProperty().bind(task.progressProperty());
-        progressLabel.textProperty().bind(task.messageProperty());
-        listView.itemsProperty().bind(task.valueProperty());
+        progressBar.progressProperty().bind(service.progressProperty());
+        progressLabel.textProperty().bind(service.messageProperty());
+        listView.itemsProperty().bind(service.valueProperty());
     }
 
     @FXML
     public void buttonPressed() {
         progressBar.setVisible(true);
-        new Thread(task).start();
+        service.start();
     }
 }
