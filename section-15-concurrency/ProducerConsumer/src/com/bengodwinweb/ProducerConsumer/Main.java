@@ -1,5 +1,6 @@
 package com.bengodwinweb.ProducerConsumer;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,19 +75,26 @@ class MyConsumer implements Runnable {
     }
 
     public void run() {
+        NumberFormat nf = NumberFormat.getInstance();
+        int counter = 0;
         while (true) {
-            bufferLock.lock();
-            try {
-                if (buffer.isEmpty()) {
-                    continue;
+            if (bufferLock.tryLock()) {
+                try {
+                    if (buffer.isEmpty()) {
+                        continue;
+                    }
+                    System.out.println(color + "The counter = " + nf.format(counter));
+                    counter = 0;
+                    if (buffer.get(0).equals(Main.EOF)) {
+                        System.out.println(color + "Exiting");
+                        break;
+                    }
+                    System.out.println(color + "Removed " + buffer.remove(0));
+                } finally {
+                    bufferLock.unlock();
                 }
-                if (buffer.get(0).equals(Main.EOF)) {
-                    System.out.println(color + "Exiting");
-                    break;
-                }
-                System.out.println(color + "Removed " + buffer.remove(0));
-            } finally {
-                bufferLock.unlock();
+            } else {
+                counter++;
             }
         }
     }
