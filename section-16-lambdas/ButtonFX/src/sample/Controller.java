@@ -9,7 +9,7 @@ public class Controller {
     private Button clickMeButton;
 
     public void initialize() {
-        clickMeButton.setOnAction((e) -> System.out.println("Button Clicked"));
+        clickMeButton.setOnAction(e -> System.out.println("Button Clicked"));
     }
 
 }
