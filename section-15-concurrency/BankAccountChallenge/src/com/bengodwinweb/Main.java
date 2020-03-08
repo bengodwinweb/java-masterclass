@@ -21,18 +21,30 @@ public class Main {
 
         // Create and start threads here
 
-        Thread thread1 = new Thread() {
+        Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println(ANSI_BLUE + Thread.currentThread().getName() + ANSI_RESET + " depositing $100");
+                System.out.println(ANSI_BLUE + Thread.currentThread().getName() + " depositing $100");
                 account.deposit(300.00);
-                System.out.println(ANSI_BLUE + Thread.currentThread().getName() + ANSI_RESET + "withdrawing $50.00");
+                System.out.println(ANSI_BLUE + Thread.currentThread().getName() + " withdrawing $50.00");
                 account.withdraw(50.00);
             }
-        };
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(ANSI_GREEN + Thread.currentThread().getName() + " depositing $203.75");
+                account.deposit(203.75);
+                System.out.println(ANSI_GREEN + Thread.currentThread().getName() + " withdrawing $100.00");
+                account.withdraw(100.00);
+            }
+        });
 
         thread1.setName("Thread 1");
+        thread2.setName("Thread 2");
 
         thread1.start();
+        thread2.start();
     }
 }
