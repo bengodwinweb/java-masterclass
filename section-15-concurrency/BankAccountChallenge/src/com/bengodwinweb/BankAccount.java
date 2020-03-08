@@ -15,12 +15,16 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
-        balance += amount;
-        System.out.println(ANSI_YELLOW + "balance after deposit on " + Thread.currentThread().getName() + " is " + nf.format(balance));
+        synchronized (this) {
+            balance += amount;
+            System.out.println(ANSI_YELLOW + "balance after deposit on " + Thread.currentThread().getName() + " is " + nf.format(balance));
+        }
     }
 
     public void withdraw(double amount) {
-        balance -= amount;
-        System.out.println(ANSI_YELLOW + "balance after withdrawal on " + Thread.currentThread().getName() + " is " + nf.format(balance));
+        synchronized (this) {
+            balance -= amount;
+            System.out.println(ANSI_YELLOW + "balance after withdrawal on " + Thread.currentThread().getName() + " is " + nf.format(balance));
+        }
     }
 }
