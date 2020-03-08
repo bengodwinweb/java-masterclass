@@ -17,7 +17,7 @@ public class Main {
     public static final String ANSI_WHITE = "\u001B[37m";
 
     public static void main(String[] args) {
-        BankAccount account = new BankAccount("12345-678", 1000.00);
+        BankAccountChallenge7 account = new BankAccountChallenge7("12345-678", 1000.00);
 
         // Create and start threads here
 
