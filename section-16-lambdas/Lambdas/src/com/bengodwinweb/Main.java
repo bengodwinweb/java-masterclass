@@ -54,7 +54,7 @@ public class Main {
 //        });
 
         // Sort employees list with lambda
-        Collections.sort(employees, (Employee e1, Employee e2) ->
+        Collections.sort(employees, (e1, e2) ->
                 e1.getName().compareTo(e2.getName()));
 
         // Best implementation using Comparator.comparing()
