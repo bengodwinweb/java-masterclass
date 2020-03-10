@@ -1,5 +1,6 @@
 package com.bengodwinweb;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +41,33 @@ public class Main {
         List<String> inoNumbers = Stream.concat(ioNumberStream, inNumberStream)
                 .distinct()
                 .sorted()
-                .collect(Collectors.toList());
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
         inoNumbers.forEach(System.out::println);
+
+        System.out.println();
+
+        Employee john = new Employee("John Doe", 30);
+        Employee jane = new Employee("Jane Deer", 25);
+        Employee jack = new Employee("Jack Hill", 40);
+        Employee snow = new Employee("Snow White", 22);
+
+        Department hr = new Department("Human Resources");
+        Stream.of(jane, jack, snow).forEach(hr::addEmployee);
+
+        Department accounting = new Department("Accounting");
+        accounting.addEmployee(john);
+
+        List<Department> departments = Stream.of(hr, accounting).collect(Collectors.toList());
+
+        List<Employee> allEmployees = departments.stream()
+                .flatMap(d -> d.getEmployees().stream())
+                .peek(System.out::println)
+                .collect(Collectors.toList());
+
+        System.out.print("\nYoungest employee is: ");
+        allEmployees.stream()
+                .reduce((e1, e2) -> e1.getAge() < e2.getAge() ? e1 : e2)
+                .ifPresent(System.out::println);
     }
 }
