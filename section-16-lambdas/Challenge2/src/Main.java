@@ -27,9 +27,7 @@ public class Main {
             return r.toString();
         };
 
-        Supplier<String> javaSupplier = () -> {
-            return "I Love Java";
-        };
+        Supplier<String> javaSupplier = () -> "I Love Java";
         String iLoveJava = javaSupplier.get();
         System.out.println("iLoveJava = " + iLoveJava + "\n");
 
