@@ -40,10 +40,17 @@ public class Main {
         employees.add(jack);
         employees.add(snow);
 
-        for(Employee employee : employees) {
-            System.out.println(employee.getName());
-        }
-        System.out.println();
+        employees.forEach(employee -> {
+            System.out.printf("%s, %s%n", employee.getName(), employee.getAge());
+        });
+
+//        for(Employee employee : employees) {
+//            System.out.println(employee.getName());
+//            new Thread(() -> System.out.println(employee.getAge())).start();
+//        }
+//        System.out.println();
+
+
 
         // Sort employees list without lambda
 //        Collections.sort(employees, new Comparator<Employee>() {
@@ -60,10 +67,10 @@ public class Main {
         // Best implementation using Comparator.comparing()
 //        Collections.sort(employees, Comparator.comparing(Employee::getName).thenComparing(Employee::getAge));
 
-        for(Employee employee : employees) {
-            System.out.println(employee.getName());
-        }
-        System.out.println();
+//        for(Employee employee : employees) {
+//            System.out.println(employee.getName());
+//        }
+//        System.out.println();
 
 //        String sillyString = doStringStuff(new UpperConcat() {
 //            @Override
@@ -72,12 +79,16 @@ public class Main {
 //            }
 //        },
 //                employees.get(0).getName(), employees.get(1).getName());
+//
+//        String sillyString = doStringStuff((s1, s2) -> s1.toUpperCase() + s2.toUpperCase(),
+//                employees.get(0).getName(),
+//                employees.get(1).getName());
+//
+//        System.out.println(sillyString);
 
-        String sillyString = doStringStuff((s1, s2) -> s1.toUpperCase() + s2.toUpperCase(),
-                employees.get(0).getName(),
-                employees.get(1).getName());
-        
-        System.out.println(sillyString);
+        AnotherClass anotherClass = new AnotherClass();
+        String s = anotherClass.doSomething();
+        System.out.println(s);
     }
 
     public final static String doStringStuff(UpperConcat uc, String s1, String s2) {
@@ -94,4 +105,15 @@ class CodeToRun implements Runnable {
 
 interface UpperConcat {
     public String upperAndConcat(String s1, String s2);
+}
+
+class AnotherClass {
+
+    public String doSomething() {
+        System.out.println("the AnotherClass class name is: " + getClass().getSimpleName());
+        return Main.doStringStuff((s1, s2) -> {
+            System.out.println("the anonymous class name is: " + getClass().getSimpleName());
+            return s1.toUpperCase() + s2.toUpperCase();
+        }, "String1", "String2");
+    }
 }
