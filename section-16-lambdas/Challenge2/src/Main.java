@@ -27,11 +27,17 @@ public class Main {
         };
 
         System.out.println(returnVal.apply("1234567890"));
-        
+        System.out.println();
+
+        System.out.println(everySecondCharacter(returnVal, "1234567890"));
         System.out.println();
 
         Stream.of("Ben Godwin", "Jake Kaplan").map(returnVal).forEach(System.out::println);
         System.out.println();
         Stream.of("Ben Godwin", "Jake Kaplan").map(spongebobCase).forEach(System.out::println);
+    }
+
+    public static String everySecondCharacter(Function<String, String> func, String s) {
+        return func.apply(s);
     }
 }
