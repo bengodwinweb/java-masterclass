@@ -26,6 +26,9 @@ public class Main {
             return r.toString();
         };
 
+        System.out.println(returnVal.apply("1234567890"));
+        
+        System.out.println();
 
         Stream.of("Ben Godwin", "Jake Kaplan").map(returnVal).forEach(System.out::println);
         System.out.println();
