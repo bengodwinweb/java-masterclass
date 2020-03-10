@@ -1,4 +1,5 @@
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class Main {
@@ -25,6 +26,12 @@ public class Main {
             }
             return r.toString();
         };
+
+        Supplier<String> javaSupplier = () -> {
+            return "I Love Java";
+        };
+        String iLoveJava = javaSupplier.get();
+        System.out.println("iLoveJava = " + iLoveJava + "\n");
 
         System.out.println(returnVal.apply("1234567890"));
         System.out.println();
