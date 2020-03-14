@@ -12,6 +12,7 @@ public class Main {
         String challenge7_2 = "kjisl.22"; // true
         String challenge7_3 = "f5.12a"; // false
         String challenge8 = "abcd.135uvqz.7tzik.999";
+        String challenge9 = "abcd.135\ttuvqz.7\tttzik.999\n";
 
         String regEx1 = "I want a bike\\.";
         System.out.println("Challenge 1: " + challenge1.matches(regEx1) + "\n");
@@ -38,12 +39,24 @@ public class Main {
         String regEx7 = "^[a-zA-Z]+[\\.][\\d]+$";
         System.out.println("Challenge 7: " + (challenge7_1.matches(regEx7) && challenge7_2.matches(regEx7) && !challenge7_3.matches(regEx7)) + "\n");
 
-        String regEx8 = "([a-zA-Z]+\\.)(\\d+)";
+        String regEx8 = "[a-zA-Z]+\\.(\\d+)";
         Pattern groupPattern = Pattern.compile(regEx8);
         Matcher groupMatcher = groupPattern.matcher(challenge8);
         System.out.println("Challenge 8:");
         while(groupMatcher.find()) {
-            System.out.println("\t" + groupMatcher.group(2));
+            System.out.println("\t" + groupMatcher.group(1));
+        }
+
+        groupMatcher = groupPattern.matcher(challenge9);
+        System.out.println("\nChallenge 9:");
+        while(groupMatcher.find()) {
+            System.out.println("\t" + groupMatcher.group(1));
+        }
+
+        groupMatcher.reset();
+        System.out.println("\nChallenge 10:");
+        while(groupMatcher.find()) {
+            System.out.println("Start: " + groupMatcher.start(1) + ", End: " + (groupMatcher.end(1) - 1));
         }
 
     }
