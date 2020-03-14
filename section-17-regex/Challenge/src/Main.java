@@ -11,6 +11,7 @@ public class Main {
         String challenge7_1 = "abcd.135"; // true
         String challenge7_2 = "kjisl.22"; // true
         String challenge7_3 = "f5.12a"; // false
+        String challenge8 = "abcd.135uvqz.7tzik.999";
 
         String regEx1 = "I want a bike\\.";
         System.out.println("Challenge 1: " + challenge1.matches(regEx1) + "\n");
@@ -34,8 +35,16 @@ public class Main {
         String regEx6 = "^a{3}bc{8}d{3}ef{3}g$";
         System.out.println("Challenge 6: " + challenge5.matches(regEx6) + "\n");
 
-        String regEx7 = "^[a-zA-Z]+\\.[\\d]+$";
+        String regEx7 = "^[a-zA-Z]+[\\.][\\d]+$";
         System.out.println("Challenge 7: " + (challenge7_1.matches(regEx7) && challenge7_2.matches(regEx7) && !challenge7_3.matches(regEx7)) + "\n");
+
+        String regEx8 = "([a-zA-Z]+\\.)(\\d+)";
+        Pattern groupPattern = Pattern.compile(regEx8);
+        Matcher groupMatcher = groupPattern.matcher(challenge8);
+        System.out.println("Challenge 8:");
+        while(groupMatcher.find()) {
+            System.out.println("\t" + groupMatcher.group(2));
+        }
 
     }
 }
