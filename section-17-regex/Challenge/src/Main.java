@@ -15,7 +15,7 @@ public class Main {
         String challenge9 = "abcd.135\ttuvqz.7\tttzik.999\n";
         String challenge11 = "{0, 2}, {0, 5}, {1, 3}, {2, 4}, {x, y}, {11, 12}";
         String challenge12_1 = "11111";
-        String challenge12_2 = "19033";
+        String challenge12_2 = "19033-1234";
         String challenge12_3 = "3341";
 
         String regEx1 = "I want a bike\\.";
@@ -72,11 +72,22 @@ public class Main {
             System.out.println("\t" + matcher11.group(1));
         }
 
-        String regEx12 = "\\d{5}";
+        String regEx12 = "^\\d{5}$";
         System.out.println("\nChallenge 12:");
         System.out.println("\tmatches \"" + challenge12_1 + "\": " + challenge12_1.matches(regEx12));
         System.out.println("\tmatches \"" + challenge12_2 + "\": " + challenge12_2.matches(regEx12));
         System.out.println("\tmatches \"" + challenge12_3 + "\": " + challenge12_3.matches(regEx12));
 
+        String regEx13 = "^\\d{5}-\\d{4}$";
+        System.out.println("\nChallenge 13:");
+        System.out.println("\tmatches \"" + challenge12_1 + "\": " + challenge12_1.matches(regEx13));
+        System.out.println("\tmatches \"" + challenge12_2 + "\": " + challenge12_2.matches(regEx13));
+        System.out.println("\tmatches \"" + challenge12_3 + "\": " + challenge12_3.matches(regEx13));
+
+        String regEx14 = "^\\d{5}(-\\d{4})?$";
+        System.out.println("\nChallenge 14:");
+        System.out.println("\tmatches \"" + challenge12_1 + "\": " + challenge12_1.matches(regEx14));
+        System.out.println("\tmatches \"" + challenge12_2 + "\": " + challenge12_2.matches(regEx14));
+        System.out.println("\tmatches \"" + challenge12_3 + "\": " + challenge12_3.matches(regEx14));
     }
 }
