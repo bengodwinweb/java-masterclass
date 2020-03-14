@@ -35,6 +35,8 @@ public class Main {
         System.out.println("replaceAll: " + AR + "\"jkl99z$\"" + RST + ", " + AG + "\"YYY\":\n\t" + RST + alphanumeric.replaceAll("jkl99z$", AP + "YYY" + RST));
         // "[]" - match each
         System.out.println("replaceAll: " + AR + "\"[aeiou]\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("[aeiou]", AP + "Y" + RST));
+        // "|" - or operator, match either character
+        System.out.println("replaceAll: " + AR + "\"a|e|i|o|u\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("a|e|i|o|u", AP + "Y" + RST));
         // "[]" - each followed by f
         System.out.println("replaceAll: " + AR + "\"[aeiou][Fj]\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("[aeiou][Fj]", AP + "Y" + RST));
         // "[^]" - each except
@@ -55,6 +57,12 @@ public class Main {
         System.out.println("replaceAll: " + AR + "\"\\w\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("\\w", AP + "Y" + RST));
         // "\\W" - match everything except characters, digits, and '_'
         System.out.println("replaceAll: " + AR + "\"\\W\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("\\W", AP + "Y" + RST));
+        // "(?!_)" - negative lookahead
+        System.out.println("replaceAll: " + AR + "\"9(?!z)\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("9(?!z)", AP + "Y" + RST));
+        // "(?=_)" - positive lookahead
+        System.out.println("replaceAll: " + AR + "\"9(?=z)\"" + RST + ", " + AG + "\"Y\":\n\t" + RST + alphanumeric.replaceAll("9(?=z)", AP + "Y" + RST));
+
+
 
 
         System.out.println();
@@ -83,7 +91,50 @@ public class Main {
         String h2Pattern = ".*<h2>.*";
         Pattern pattern = Pattern.compile(h2Pattern); // can pass in options as second parameter
         Matcher matcher = pattern.matcher(htmlText);
-        System.out.println("Checking html text for h2 tag: " + (matcher.matches() ? AG + matcher.matches() : AR + matcher.matches()));
+        System.out.println("Checking if htmlText matches \"" + h2Pattern + "\": " + (matcher.matches() ? AG + matcher.matches() : AR + matcher.matches()) + RST + "\n");
+
+        String h2GroupPattern = "(<h2>.*?</h2>)";
+        Pattern groupPattern = Pattern.compile(h2GroupPattern);
+        Matcher groupMatcher = groupPattern.matcher(htmlText);
+        System.out.println("Checking if htmlText matches \"" + h2GroupPattern + "\": " + (groupMatcher.matches() ? AG + groupMatcher.matches() : AR + groupMatcher.matches()) + RST + "\n");
+
+        groupMatcher.reset();
+        while(groupMatcher.find()) {
+            System.out.println("Occurrence: " + groupMatcher.group(1));
+        }
+
+        String h2TextGroups = "(<h2>)(.*?)(</h2)";
+        Pattern h2TextPattern = Pattern.compile(h2TextGroups);
+        Matcher h2TextMatcher = h2TextPattern.matcher(htmlText);
+
+        System.out.println();
+        while(h2TextMatcher.find()) {
+            System.out.println("Occurrence: " + h2TextMatcher.group(2));
+        }
+
+        System.out.println();
+        String pn1 = "(540) 604-6376";
+        String pn2 = "(540) 6046376";
+        String pn3 = "(540 604-6376";
+        String pn4 = "(540)) 604-6376";
+        String pn5 = "540.604.6376";
+        String pn6 = "5406046376";
+
+        String output = pn6.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+        System.out.println("output = " + output);
+
+        String pnFormat = "^([\\(|.]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$";
+        String pnFormat2 = "[(][0-9]{3}[)] [0-9]{3}[-][0-9]{4}";
+        String pnFormat3 = "[(]?[\\d]{3}[)|.]?[ ]?[\\d]{3}[-|.]?[\\d]{4}";
+
+        Pattern pnPattern = Pattern.compile(pnFormat);
+        Matcher pnMatcher = pnPattern.matcher(pn1);
+        System.out.println("Phone number 1 is valid: " + pn1.matches(pnFormat3));
+        System.out.println("Phone number 2 is valid: " + pn2.matches(pnFormat3));
+        System.out.println("Phone number 3 is valid: " + pn3.matches(pnFormat3));
+        System.out.println("Phone number 4 is valid: " + pn4.matches(pnFormat3));
+        System.out.println("Phone number 5 is valid: " + pn5.matches(pnFormat3));
+        System.out.println("Phone number 6 is valid: " + pn6.matches(pnFormat3));
 
 
     }
