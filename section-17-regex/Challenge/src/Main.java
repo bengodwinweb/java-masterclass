@@ -8,6 +8,9 @@ public class Main {
         String challenge2 = "I want a ball.";
         String challenge4 = "Replace all blanks with underscores.";
         String challenge5 = "aaabccccccccdddefffg";
+        String challenge7_1 = "abcd.135"; // true
+        String challenge7_2 = "kjisl.22"; // true
+        String challenge7_3 = "f5.12a"; // false
 
         String regEx1 = "I want a bike\\.";
         System.out.println("Challenge 1: " + challenge1.matches(regEx1) + "\n");
@@ -28,8 +31,11 @@ public class Main {
         String regEx5 = "[a-g]+";
         System.out.println("Challenge 5: " + challenge5.matches(regEx5) + "\n");
 
-        String regEx6 = "a{3}bc{8}d{3}ef{3}g";
+        String regEx6 = "^a{3}bc{8}d{3}ef{3}g$";
         System.out.println("Challenge 6: " + challenge5.matches(regEx6) + "\n");
+
+        String regEx7 = "^[a-zA-Z]+\\.[\\d]+$";
+        System.out.println("Challenge 7: " + (challenge7_1.matches(regEx7) && challenge7_2.matches(regEx7) && !challenge7_3.matches(regEx7)) + "\n");
 
     }
 }
