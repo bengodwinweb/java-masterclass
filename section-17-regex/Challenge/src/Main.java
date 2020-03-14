@@ -7,6 +7,7 @@ public class Main {
         String challenge1 = "I want a bike.";
         String challenge2 = "I want a ball.";
         String challenge4 = "Replace all blanks with underscores.";
+        String challenge5 = "aaabccccccccdddefffg";
 
         String regEx1 = "I want a bike\\.";
         System.out.println("Challenge 1: " + challenge1.matches(regEx1) + "\n");
@@ -24,6 +25,11 @@ public class Main {
         String regEx4 = "\\s";
         System.out.println("Challenge 4: " + challenge4.replaceAll(regEx4, "_") + "\n");
 
+        String regEx5 = "[a-g]+";
+        System.out.println("Challenge 5: " + challenge5.matches(regEx5) + "\n");
+
+        String regEx6 = "a{3}bc{8}d{3}ef{3}g";
+        System.out.println("Challenge 6: " + challenge5.matches(regEx6) + "\n");
 
     }
 }
