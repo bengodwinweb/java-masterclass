@@ -13,14 +13,19 @@ public class Main {
         String challenge7_3 = "f5.12a"; // false
         String challenge8 = "abcd.135uvqz.7tzik.999";
         String challenge9 = "abcd.135\ttuvqz.7\tttzik.999\n";
+        String challenge11 = "{0, 2}, {0, 5}, {1, 3}, {2, 4}, {x, y}, {11, 12}";
+        String challenge12_1 = "11111";
+        String challenge12_2 = "19033";
+        String challenge12_3 = "3341";
 
         String regEx1 = "I want a bike\\.";
         System.out.println("Challenge 1: " + challenge1.matches(regEx1) + "\n");
 
         String regEx2 = "I want a b\\w{3}\\.";
         String regEx3 = "I want a b(all|ike)\\.";
-        System.out.println("Challenge 2: " + (challenge1.matches(regEx2) && challenge2.matches(regEx2)));
-        System.out.println("Challenge 2: " + (challenge1.matches(regEx3) && challenge2.matches(regEx3)) + "\n");
+        System.out.println("Challenge 2: ");
+        System.out.println("\t" + (challenge1.matches(regEx2) && challenge2.matches(regEx2)));
+        System.out.println("\t" + (challenge1.matches(regEx3) && challenge2.matches(regEx3)) + "\n");
 
         Pattern pattern = Pattern.compile(regEx2);
         Matcher matcher1 = pattern.matcher(challenge1);
@@ -56,8 +61,22 @@ public class Main {
         groupMatcher.reset();
         System.out.println("\nChallenge 10:");
         while(groupMatcher.find()) {
-            System.out.println("Start: " + groupMatcher.start(1) + ", End: " + (groupMatcher.end(1) - 1));
+            System.out.println("\tStart: " + groupMatcher.start(1) + ", End: " + (groupMatcher.end(1) - 1));
         }
+
+        String regEx11 = "[{](\\d+, \\d+)[}]";
+        Pattern pattern11 = Pattern.compile(regEx11);
+        Matcher matcher11 = pattern11.matcher(challenge11);
+        System.out.println("\nChallenge 11:");
+        while(matcher11.find()) {
+            System.out.println("\t" + matcher11.group(1));
+        }
+
+        String regEx12 = "\\d{5}";
+        System.out.println("\nChallenge 12:");
+        System.out.println("\tmatches \"" + challenge12_1 + "\": " + challenge12_1.matches(regEx12));
+        System.out.println("\tmatches \"" + challenge12_2 + "\": " + challenge12_2.matches(regEx12));
+        System.out.println("\tmatches \"" + challenge12_3 + "\": " + challenge12_3.matches(regEx12));
 
     }
 }
