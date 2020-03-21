@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ac5eb55-578d-4f6c-8b05-750351c469dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JUnitChallenge/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JUnitChallenge/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JUnitChallenge/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JUnitChallenge/JUnitChallenge.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JUnitChallenge/src/com/bengodwinweb/Utilities.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
