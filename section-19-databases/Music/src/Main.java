@@ -1,5 +1,6 @@
 import model.Artist;
 import model.Datasource;
+import model.SongArtist;
 
 import java.util.List;
 
@@ -21,6 +22,28 @@ public class Main {
         for (Artist artist : artists) {
             System.out.printf("ID = %d, Name = %s%n", artist.getId(), artist.getName());
         }
+
+        String artist = "Iron Maiden";
+        List<String> pinkFloydAlbums = datasource.queryAlbumsForArtist(artist);
+        System.out.println("\n--- " + artist + " Albums ---");
+        for (String a : pinkFloydAlbums) {
+            System.out.println(a);
+        }
+        System.out.println("--- " + artist + " Albums ---\n");
+
+
+        String song = "Go Your Own Way";
+        List<SongArtist> songArtistList = datasource.queryArtistsForSong(song);
+        System.out.println("\n--- " + song + " Artists ---");
+        for (SongArtist songArtist : songArtistList) {
+            System.out.println(songArtist);
+        }
+        System.out.println("--- " + song + " Artists ---\n");
+
+        datasource.querySongsMetadata();
+
+        int songsCount = datasource.getCount(Datasource.TABLE_SONGS);
+        System.out.println("songs total = " + songsCount + "\n");
 
         datasource.close();
     }
