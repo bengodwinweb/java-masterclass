@@ -45,6 +45,17 @@ public class Main {
         int songsCount = datasource.getCount(Datasource.TABLE_SONGS);
         System.out.println("songs total = " + songsCount + "\n");
 
+        System.out.println("Creating artist_list... - " + datasource.createViewForSongArtists());
+
+        songArtistList = datasource.querySongInfoView(song);
+        System.out.println("\n--- " + song + " Artists from artist_view ---");
+        for (SongArtist songArtist : songArtistList) {
+            System.out.println(songArtist);
+        }
+        System.out.println("--- " + song + " Artists from artist_view ---\n");
+
+        datasource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark", 1);
+
         datasource.close();
     }
 }
