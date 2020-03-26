@@ -54,7 +54,7 @@ public class Main {
         }
         System.out.println("--- " + song + " Artists from artist_view ---\n");
 
-        datasource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark", 1);
+        datasource.insertSong("Test Song", "Test Artist", "Test Album", 1);
 
         datasource.close();
     }

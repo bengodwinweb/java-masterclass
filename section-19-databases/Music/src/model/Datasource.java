@@ -387,7 +387,7 @@ public class Datasource {
             if (affectedRows == 1) conn.commit();
             else throw new SQLException("Song insert failed");
 
-        } catch(SQLException e) {
+        } catch(Exception e) {
             System.out.println("Performing rollback");
             e.printStackTrace();
             try {
