@@ -4,4 +4,5 @@ module MusicUI {
     requires java.sql;
 
     opens com.bengodwinweb;
+    opens com.bengodwinweb.model;
 }
