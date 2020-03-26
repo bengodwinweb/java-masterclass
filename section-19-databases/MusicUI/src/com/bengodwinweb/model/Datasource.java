@@ -8,7 +8,7 @@ public class Datasource {
     public enum SORT_ORDER{NONE, DESC, ASC}
 
     public static final String DB_NAME = "music.db";
-    public static final String CONNECTION_STRING = "jdbc:sqlite:/Users/bgodwin/Local Files/Development Projects/java-programming-masterclass/section-19-databases/Music/" + DB_NAME;
+    public static final String CONNECTION_STRING = "jdbc:sqlite:/Users/bgodwin/Local Files/Development Projects/java-programming-masterclass/section-19-databases/MusicUI/" + DB_NAME;
 
     public static final String TABLE_ALBUMS = "albums";
     public static final String COLUMN_ALBUM_ID = "_id";
