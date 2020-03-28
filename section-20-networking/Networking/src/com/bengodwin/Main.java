@@ -3,9 +3,9 @@ package com.bengodwin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class Main {
 
@@ -45,18 +45,39 @@ public class Main {
 
 
             URL url = new URL("http://example.org");
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.connect();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Chrome");
+            connection.setReadTimeout(15000);
 
-            BufferedReader inputStream = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            int responseCode = connection.getResponseCode();
+            System.out.println("Respone code = " + responseCode);
 
-            String line = "";
-            while(line != null) {
-                line = inputStream.readLine();
+            if (responseCode != 200) {
+                System.out.println("Error reading web page");
+                return;
+            }
+
+            BufferedReader inputReader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+
+            String line;
+            while((line = inputReader.readLine()) != null) {
                 System.out.println(line);
             }
-            inputStream.close();
+            inputReader.close();
+//
+//            Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+//
+//            for (Map.Entry<String, List<String>> entry: headerFields.entrySet()) {
+//                String key = entry.getKey();
+//                List<String> values = entry.getValue();
+//                System.out.println("------key = " + key);
+//                for(String value: values) {
+//                    System.out.println("value = " + value);
+//                }
+//            }
+
 
 
 //        } catch (URISyntaxException e) {
